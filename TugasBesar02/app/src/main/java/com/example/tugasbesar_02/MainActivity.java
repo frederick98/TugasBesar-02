@@ -127,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         public void onLongPress(MotionEvent e) {
             //toggle change stroke + show toast
-            //syntax : Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
-            //			toast.show();
-
             if (strokePaint.getStrokeWidth() == 2) {
                 strokePaint.setStrokeWidth(20);
             } else {
