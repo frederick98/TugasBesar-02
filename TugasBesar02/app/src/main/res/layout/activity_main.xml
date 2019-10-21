@@ -10,6 +10,12 @@
     <ImageView
         android:id="@+id/iv_canvas"
         android:layout_width="match_parent"
-        android:layout_height="730dp" />
+        android:layout_height="682dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start"
+        android:text="start"></Button>
 
 </LinearLayout>

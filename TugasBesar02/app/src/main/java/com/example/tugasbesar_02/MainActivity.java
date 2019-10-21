@@ -5,6 +5,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -18,30 +19,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener {
-    private MotionEvent motionEvent;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     protected Bitmap mBitmap;
     protected Canvas mCanvas;
     protected ImageView ivCanvas;
     protected Paint strokePaint;
-    private GestureDetector mDetector;
+    protected Button btn_start;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         this.ivCanvas = findViewById(R.id.iv_canvas);
-
-        //create gesture detector + listener
-        this.mDetector = new GestureDetector(this, new MyCustomGestureListener());
-        this.ivCanvas.setOnTouchListener(this);
-
-        //atribut initialization
-        //this.btnDraw.setOnClickListener(this);
-        this.mCanvas = new Canvas();
-        initiateCanvas();
+        this.btn_start=findViewById(R.id.btn_start);
+        this.btn_start.setOnClickListener(this);
     }
 
 
@@ -58,16 +51,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         // new paint for stroke + style (Paint.Style.STROKE)
         this.strokePaint = new Paint();
-        this.strokePaint.setStyle(Paint.Style.STROKE);
-        this.strokePaint.setStrokeWidth(2);
+        this.strokePaint.setColor(Color.BLUE);
 
         //create rectangle
-        Rect rect = new Rect(10, 20, 100, 100);
-        mCanvas.drawRect(rect, strokePaint);
+        Pesawat p = new Pesawat(100, 100, 100);
+        p.drawTriangle(this.mCanvas, this.strokePaint);
 
-        // create circle
-        // cx and cy adalah posisi titik tengah dimulainya radius
-        mCanvas.drawCircle(150, 250, 100, strokePaint);
 
         //resetCanvas
         this.ivCanvas.invalidate();
@@ -85,56 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public void onClick(View view) {
-
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
-    }
-
-    protected class MyCustomGestureListener extends GestureDetector.SimpleOnGestureListener {
-        protected PointF start;
-
-        public boolean onDown(MotionEvent e) {
-            //new start point with position if null, else set start position
-            if (start == null) {
-                this.start = new PointF(e.getX(), e.getY());
-            } else {
-                this.start.set(e.getX(), e.getY());
-            }
-            return true;
-        }
-
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            //set path
-            Path strokePath = new Path();
-            //change start point for next path
-            strokePath.moveTo(this.start.x, this.start.y);
-
-            //draw path
-            strokePath.lineTo(e2.getX(), e2.getY());
-            strokePath.close();
-
-            //redraw
-            this.start.set(e2.getX(), e2.getY());
-
-            mCanvas.drawPath(strokePath, strokePaint);
-            ivCanvas.invalidate();
-
-            return true;
-        }
-
-        public void onLongPress(MotionEvent e) {
-            //toggle change stroke + show toast
-            if (strokePaint.getStrokeWidth() == 2) {
-                strokePaint.setStrokeWidth(20);
-            } else {
-                strokePaint.setStrokeWidth(2);
-            }
-            Toast toast = Toast.makeText(getApplicationContext(), "stroke width changed to " + strokePaint.getStrokeWidth() + "", Toast.LENGTH_SHORT);
-            toast.show();
-
-        }
+       if(btn_start.getId()==view.getId()) {
+           this.initiateCanvas();
+       }
     }
 }
+
+
