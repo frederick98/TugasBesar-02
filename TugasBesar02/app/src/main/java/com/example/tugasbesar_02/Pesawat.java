@@ -3,12 +3,14 @@ package com.example.tugasbesar_02;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.view.View;
 
 public class Pesawat {
 
     protected int x;
     protected int y;
     protected int width;
+    protected View.OnTouchListener onTouchListener;
 
 
     public Pesawat(int x,int y,int width)
@@ -33,4 +35,11 @@ public class Pesawat {
 
     }
 
+    public void setOnTouchListener(View.OnTouchListener onTouchListener) {
+        this.onTouchListener = onTouchListener;
+    }
+
+    public View.OnTouchListener getOnTouchListener() {
+        return onTouchListener;
+    }
 }
