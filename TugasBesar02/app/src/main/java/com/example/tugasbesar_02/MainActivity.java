@@ -19,13 +19,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     protected Bitmap mBitmap;
     protected Canvas mCanvas;
     protected ImageView ivCanvas;
     protected Paint strokePaint;
     protected Button btn_start;
-
+    protected FloatingActionButton fab_pause;
+    protected FloatingActionButton fab_setting;
 
 
     @Override
@@ -34,7 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         this.ivCanvas = findViewById(R.id.iv_canvas);
         this.btn_start=findViewById(R.id.btn_start);
+        this.fab_pause = findViewById(R.id.fab_pause);
+        this.fab_setting = findViewById(R.id.fab_menu);
+
         this.btn_start.setOnClickListener(this);
+        this.fab_pause.setOnClickListener(this);
+        this.fab_setting.setOnClickListener(this);
     }
 
 
@@ -76,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
        if(btn_start.getId()==view.getId()) {
            this.initiateCanvas();
+       }
+       else if(view.getId()==this.fab_pause.getId()){
+           //cek dulu iconnya , jika ic_play >> mulai game
+           //jika ic_pause >> pause game
+       }
+       else if(view.getId()==this.fab_setting.getId()){
+           //tampilkan setting
        }
     }
 }
