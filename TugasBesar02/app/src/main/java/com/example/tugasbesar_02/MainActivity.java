@@ -47,10 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.fab_setting = findViewById(R.id.fab_menu);
 
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        this.ivCanvas.setOnTouchListener(onTouchListener());
 
         this.btn_start.setOnClickListener(this);
         this.fab_pause.setOnClickListener(this);
         this.fab_setting.setOnClickListener(this);
+
     }
 
 
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        }
     }
 
-    protected View.OnTouchListener onTouchListener(){
+    private View.OnTouchListener onTouchListener(){
        return new View.OnTouchListener() {
            @SuppressLint("ClickableViewAccessibility")
            @Override
