@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,18 +20,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,FragmentListener {
     protected Bitmap mBitmap;
     protected Canvas mCanvas;
     protected ImageView ivCanvas;
     protected Paint strokePaint;
     protected Button btn_start;
     protected FloatingActionButton fab_pause;
-    protected FloatingActionButton fab_setting;
+    protected FloatingActionButton fab_menu;
+    protected TextView tv_playerName;
+    protected TextView tv_score;
 
     private ViewGroup mainLayout;
     private int xDelta;
@@ -44,14 +48,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.ivCanvas = findViewById(R.id.iv_canvas);
         this.btn_start = findViewById(R.id.btn_start);
         this.fab_pause = findViewById(R.id.fab_pause);
-        this.fab_setting = findViewById(R.id.fab_menu);
+        this.fab_menu = findViewById(R.id.fab_menu);
+        this.tv_score = findViewById(R.id.tv_score);
+        this.tv_playerName = findViewById(R.id.tv_playerName);
 
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
         this.ivCanvas.setOnTouchListener(onTouchListener());
 
         this.btn_start.setOnClickListener(this);
         this.fab_pause.setOnClickListener(this);
-        this.fab_setting.setOnClickListener(this);
+        this.fab_menu.setOnClickListener(this);
 
     }
 
@@ -98,11 +104,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            this.initiateCanvas();
        }
        else if(view.getId() == this.fab_pause.getId()){
-           //cek dulu iconnya , jika ic_play >> mulai game
            //jika ic_pause >> pause game
+           FragmentTransaction ft = getFragmentManager().beginTransaction();
+           PauseFragment pauseDialogFragment = new PauseFragment();
+           //pauseDialogFragment.show(ft,this.tv_score.getText().toString()); <<Ini bingung salah dimana
        }
-       else if(view.getId() == this.fab_setting.getId()){
-           //tampilkan setting
+       else if(view.getId() == this.fab_menu.getId()){
+           //jika ic_menu >> tampilkan menu
+           FragmentTransaction ft = getFragmentManager().beginTransaction();
+           MenuFragment menuDialogFragment = new MenuFragment();
+           //menuDialogFragment.show(ft,this.tv_playerName.getText().toString()); <<Ini bingung salah dimana
        }
     }
 
@@ -144,4 +155,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            }
        };
     }
+
+    @Override
+    public void closeApp() {
+        this.moveTaskToBack(true);
+        this.finish();
+    }
+
+
 }

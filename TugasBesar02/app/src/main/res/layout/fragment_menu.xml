@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Please enter username"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:layout_marginBottom="15dp"
+            >
+        </EditText>
+
+        <Button
+            android:id="@+id/frd_btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="START"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="10dp">
+        </Button>
+
+        <Button
+            android:id="@+id/btn_exitGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="EXIT"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="10dp">
+        </Button>
+    </LinearLayout>
+</FrameLayout>
