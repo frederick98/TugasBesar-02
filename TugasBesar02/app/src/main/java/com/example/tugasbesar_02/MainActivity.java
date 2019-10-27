@@ -12,12 +12,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,43 +27,147 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,FragmentListener {
     protected Bitmap mBitmap;
     protected Canvas mCanvas;
-    protected ImageView ivCanvas;
     protected Paint strokePaint;
-    protected Button btn_start;
-    protected FloatingActionButton fab_pause;
-    protected FloatingActionButton fab_menu;
-    protected TextView tv_playerName;
-    protected TextView tv_score;
+    protected Button btnStart;
+    protected FloatingActionButton fabPause;
+    protected FloatingActionButton fabMenu;
+    protected TextView tvPlayerName;
+    protected TextView tvScore;
+    protected ImageView ivPlane;
+    protected ImageView ivPlane2;
+    protected ImageView ivBomb;
+    protected FrameLayout flCanvas;
 
+
+    // set size
+    private int planeSize;
+
+    //plane position
+    private int planeY;
+    private int canvasHeight;
+
+    //class initialization
+    protected Handler handler = new Handler();
+    protected Timer timer = new Timer();
+
+    //status check
+    private boolean action_flg = false;
+    private boolean activityStart = false;
+
+    /*
     private ViewGroup mainLayout;
     private int xDelta;
     private int yDelta;
+
+     */
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.ivCanvas = findViewById(R.id.iv_canvas);
-        this.btn_start = findViewById(R.id.btn_start);
-        this.fab_pause = findViewById(R.id.fab_pause);
-        this.fab_menu = findViewById(R.id.fab_menu);
-        this.tv_score = findViewById(R.id.tv_score);
-        this.tv_playerName = findViewById(R.id.tv_playerName);
+        //this.btnStart = findViewById(R.id.btn_start);
+        this.fabPause = findViewById(R.id.fab_pause);
+        this.fabMenu = findViewById(R.id.fab_menu);
+        this.tvScore = findViewById(R.id.tv_score);
+        this.tvPlayerName = findViewById(R.id.tv_playerName);
+        this.ivPlane = findViewById(R.id.iv_plane);
+        this.ivPlane2 = findViewById(R.id.iv_plane_enemy);
+        this.ivBomb = findViewById(R.id.iv_bomb);
 
+        // setOnClickListener
+        //this.btnStart.setOnClickListener(this);
+        this.fabPause.setOnClickListener(this);
+        this.fabMenu.setOnClickListener(this);
+
+
+        // bersihin si layar jd cuma nampilin pesawat kita doang
+        this.ivPlane2.setX(-80);
+        this.ivPlane2.setY(-80);
+        this.ivBomb.setX(-80);
+        this.ivBomb.setY(-80);
+
+
+        /*
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
-        this.ivCanvas.setOnTouchListener(onTouchListener());
+        this.ivPesawat.setOnTouchListener(onTouchListener());
 
-        this.btn_start.setOnClickListener(this);
-        this.fab_pause.setOnClickListener(this);
-        this.fab_menu.setOnClickListener(this);
+         */
+    }
 
+    public void changePosition(){
+        // move plane
+        if(action_flg == true){
+            // touching
+            planeY -= 20;
+        }
+        else{
+            // release
+            planeY += 20;
+        }
+
+        // check plane position
+        if(planeY < 0){
+            planeY = 0;
+        }
+        if(planeY > (canvasHeight - planeSize)){
+            planeY = canvasHeight - planeSize;
+        }
+
+        ivPlane.setY(planeY);
+    }
+
+    public boolean onTouchEvent(MotionEvent motionEvent){
+
+        if(activityStart == false){
+            activityStart = true;
+
+            /*
+            frame height and plane height nya baru diset disini soalnya di method
+            onCreate() si UI nya belom set ama screennya. baris ini buat ngejaga
+            supaya si planenya ga kluar dari canvas
+            */
+            this.flCanvas = findViewById(R.id.frame_canvas);
+            canvasHeight = flCanvas.getHeight();
+
+            this.planeY = (int) ivPlane.getY();
+
+            planeSize = ivPlane.getHeight();
+
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            changePosition();
+                        }
+                    });
+                }
+            }, 0, 20);  //manggil method changePosition setiap 20ms
+        }
+        else{
+            if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                action_flg = true;
+            }
+            else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                action_flg = false;
+            }
+        }
+
+
+        return true;
     }
 
 
+    /*
     public void initiateCanvas() {
         // 1. Create Bitmap
         this.mBitmap = Bitmap.createBitmap(this.ivCanvas.getWidth(), this.ivCanvas.getHeight(), Bitmap.Config.ARGB_8888);
@@ -78,15 +184,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.strokePaint.setColor(Color.BLUE);
 
         //create pesawat
+        /*
         Pesawat p = new Pesawat(100, 100, 100);
         p.drawTriangle(this.mCanvas, this.strokePaint);
         p.setOnTouchListener(onTouchListener());
         p.getOnTouchListener();
 
 
+
         //resetCanvas
         this.ivCanvas.invalidate();
-    }
+
+
 
     public void resetCanvas() {
         // 4. Draw canvas background
@@ -98,18 +207,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.ivCanvas.invalidate();
     }
 
+     */
+
     @Override
     public void onClick(View view) {
-       if(btn_start.getId() == view.getId()) {
-           this.initiateCanvas();
+       if(btnStart.getId() == view.getId()) {
+           //this.initiateCanvas();
        }
-       else if(view.getId() == this.fab_pause.getId()){
+       else if(view.getId() == this.fabPause.getId()){
            //jika ic_pause >> pause game
            FragmentTransaction ft = getFragmentManager().beginTransaction();
            PauseFragment pauseDialogFragment = new PauseFragment();
            //pauseDialogFragment.show(ft,this.tv_score.getText().toString()); <<Ini bingung salah dimana
        }
-       else if(view.getId() == this.fab_menu.getId()){
+       else if(view.getId() == this.fabMenu.getId()){
            //jika ic_menu >> tampilkan menu
            FragmentTransaction ft = getFragmentManager().beginTransaction();
            MenuFragment menuDialogFragment = new MenuFragment();
@@ -117,6 +228,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        }
     }
 
+    
+    /*
     private View.OnTouchListener onTouchListener(){
        return new View.OnTouchListener() {
            @SuppressLint("ClickableViewAccessibility")
@@ -130,8 +243,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                        LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams)
                                view.getLayoutParams();
 
-                       xDelta = x - lParams.leftMargin;
-                       yDelta = y - lParams.topMargin;
+                       //xDelta = x - lParams.leftMargin;
+                       //yDelta = y - lParams.topMargin;
                        break;
 
                    case MotionEvent.ACTION_UP:
@@ -150,12 +263,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                        view.setLayoutParams(layoutParams);
                        break;
                }
-               mainLayout.invalidate();
+               //mainLayout.invalidate();
                return true;
            }
        };
     }
 
+    /*
     public void drawMusuh(Musuh musuh)
     {
         this.resetCanvas();
@@ -167,12 +281,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.ivCanvas.invalidate();
 
     }
+     */
 
     @Override
     public void closeApp() {
         this.moveTaskToBack(true);
         this.finish();
     }
+
 
 
 

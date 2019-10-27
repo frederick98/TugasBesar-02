@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MenuFragment extends DialogFragment implements View.OnClickListener {
-    protected EditText et_username;
-    protected Button btn_start;
-    protected Button btn_exit;
+    protected EditText etUsername;
+    protected Button btnStart;
+    protected Button btnExit;
     protected FragmentListener listener;
 
     public MenuFragment() {
@@ -28,22 +28,22 @@ public class MenuFragment extends DialogFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        this.et_username = view.findViewById(R.id.et_username);
-        this.btn_start = view.findViewById(R.id.btn_start);
-        this.btn_exit = view.findViewById(R.id.btn_exitGame);
+        this.etUsername = view.findViewById(R.id.et_username);
+        this.btnStart = view.findViewById(R.id.frd_btn_start);
+        this.btnExit = view.findViewById(R.id.frd_btn_exitGame);
 
-        this.btn_start.setOnClickListener(this);
-        this.btn_exit.setOnClickListener(this);
+        this.btnStart.setOnClickListener(this);
+        this.btnExit.setOnClickListener(this);
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==this.btn_start.getId()){
+        if(view.getId() == this.btnStart.getId()){
             getFragmentManager().beginTransaction().remove(MenuFragment.this).commit();
         }
-        else if(view.getId()==this.btn_exit.getId()){
+        else if(view.getId() == this.btnExit.getId()){
             this.listener.closeApp();
         }
     }

@@ -36,7 +36,7 @@
         </Button>
 
         <Button
-            android:id="@+id/btn_exitGame"
+            android:id="@+id/frd_btn_exitGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"

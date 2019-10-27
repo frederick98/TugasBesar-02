@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class GameOverFragment extends Fragment implements View.OnClickListener {
-    protected TextView tv_highScore;
-    protected TextView tv_playerName;
-    protected TextView tv_playerScore;
-    protected Button btn_playAgain;
+    protected TextView tvHighScore;
+    protected TextView tvPlayerName;
+    protected TextView tvPlayerScore;
+    protected Button btnPlayAgain;
 
     public GameOverFragment() {
     }
@@ -26,19 +26,19 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_game_over, container, false);
 
-        this.tv_highScore = view.findViewById(R.id.tv_over_highScore);
-        this.tv_playerName = view.findViewById(R.id.tv_playerName);
-        this.tv_playerScore = view.findViewById(R.id.tv_over_playerScore);
-        this.btn_playAgain = view.findViewById(R.id.btn_playAgain);
+        this.tvHighScore = view.findViewById(R.id.tv_over_highScore);
+        this.tvPlayerName = view.findViewById(R.id.tv_playerName);
+        this.tvPlayerScore = view.findViewById(R.id.tv_over_playerScore);
+        this.btnPlayAgain = view.findViewById(R.id.btn_playAgain);
 
-        this.btn_playAgain.setOnClickListener(this);
+        this.btnPlayAgain.setOnClickListener(this);
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==this.btn_playAgain.getId()){
+        if(view.getId() == this.btnPlayAgain.getId()){
             getFragmentManager().beginTransaction().remove(GameOverFragment.this).commit();
             //start game
         }

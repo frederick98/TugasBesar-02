@@ -14,8 +14,8 @@ public class ThreadMove implements Runnable {
     public ThreadMove(UIHandler uiHandler,Musuh bomusuhla)
     {
         this.uiHandler=uiHandler;
-        this.thread= new Thread(this);
-        this.musuh=musuh;
+        this.thread = new Thread(this);
+        this.musuh = musuh;
     }
 
 

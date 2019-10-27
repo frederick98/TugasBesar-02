@@ -11,9 +11,9 @@ public class Musuh {
 
     public Musuh(int width,int height)
     {
-        this.x=width/2;
-        this.y=height/2;
-        this.rad=50;
+        this.x = width/2;
+        this.y = height/2;
+        this.rad = 50;
         this.Randpos();
     }
 

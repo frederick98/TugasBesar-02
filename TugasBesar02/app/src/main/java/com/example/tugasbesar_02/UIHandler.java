@@ -29,7 +29,7 @@ public class UIHandler extends Handler {
         if(msg.what==UIHandler.MSG_SET_GAMBAR )
         {
             Musuh musuh = (Musuh)msg.obj;
-            this.activity.drawMusuh(musuh);
+            //this.activity.drawMusuh(musuh);
         }
     }
 
