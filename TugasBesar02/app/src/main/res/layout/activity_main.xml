@@ -26,18 +26,18 @@
             >
 
             <TextView
+                android:id="@+id/tv_playerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Player : Unknown"
-                android:id="@+id/tv_playerName"
                 >
             </TextView>
 
             <TextView
+                android:id="@+id/tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Score : 0"
-                android:id="@+id/tv_score"
                 >
             </TextView>
         </LinearLayout>

@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean action_flg = false;
     private boolean activityStart = false;
 
+    // scoring
+    protected int score = 0;
+
     /*
     private ViewGroup mainLayout;
     private int xDelta;
@@ -108,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.ivBomb.setY(-80);
 
 
+        tvScore.setText("Score : " + this.score);
+
+
         /*
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
         this.ivPesawat.setOnTouchListener(onTouchListener());
@@ -116,8 +122,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void changePosition(){
+        hitStatus();
+
         // plane2
-        plane2X -= 12;
+        plane2X -= 10;
         if(plane2X < 0){
             plane2X = lebarLayar + 20;
             plane2Y = (int) Math.floor(Math.random() * (tinggiLayar - ivPlane2.getHeight()));
@@ -125,8 +133,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ivPlane2.setX(plane2X);
         ivPlane2.setY(plane2Y);
 
+        // bomb
+        bombX -= 5;
+        if(bombX < 0){
+            bombX = lebarLayar + 12;
+            bombY = (int) Math.floor(Math.random() * (tinggiLayar - ivBomb.getHeight()));
+        }
+        ivBomb.setX(bombX);
+        ivBomb.setY(bombY);
 
-        // move plane
+
+        // move plane, dibuat kalo touch nanti naek, kalo release nanti turun
         if(action_flg == true){
             // touching
             planeY -= 20;
@@ -145,7 +162,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         ivPlane.setY(planeY);
+
     }
+
+    /*
+    kalo kena pesawat score -10
+    kalo kena bom score -20
+     */
+    public void hitStatus(){
+
+        int plane2DiaX = plane2X + (ivPlane2.getWidth() / 2);
+        int plane2DiaY = plane2Y + (ivPlane2.getHeight() / 2);
+
+        // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
+        boolean nempel = 0<=plane2DiaX;
+        boolean sejajarDalamP1 = plane2DiaY <= planeSize;
+        boolean samaTinggiDalamP1 = planeY<=plane2DiaY;
+        boolean didalamP1 = plane2DiaY<=planeY+planeSize;
+
+        if(nempel && sejajarDalamP1 && samaTinggiDalamP1 && didalamP1){
+            this.score -= 10;
+            plane2X -= 10;
+        }
+
+    }
+
 
     public boolean onTouchEvent(MotionEvent motionEvent){
 
