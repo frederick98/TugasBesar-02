@@ -10,14 +10,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,18 +48,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected FrameLayout flCanvas;
 
 
-    // set size
+    // buat ngatur supaya object ga kluar dari canvas
     private int planeSize;
-
-    //plane position
-    private int planeY;
     private int canvasHeight;
+    private int lebarLayar, tinggiLayar;
 
-    //class initialization
+    // object position
+    private int planeY;
+    private int plane2X, plane2Y;
+    private int bombX, bombY;
+
+    // class initialization
     protected Handler handler = new Handler();
     protected Timer timer = new Timer();
 
-    //status check
+    // buat cek status 
     private boolean action_flg = false;
     private boolean activityStart = false;
 
@@ -86,6 +92,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.fabPause.setOnClickListener(this);
         this.fabMenu.setOnClickListener(this);
 
+        // buat dapetin ukuran layar trus set ke ukuranLayar
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        Point displaySize = new Point();
+        display.getSize(displaySize);
+
+        lebarLayar = displaySize.x;
+        tinggiLayar = displaySize.y;
 
         // bersihin si layar jd cuma nampilin pesawat kita doang
         this.ivPlane2.setX(-80);
@@ -102,6 +116,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void changePosition(){
+        // plane2
+        plane2X -= 12;
+        if(plane2X < 0){
+            plane2X = lebarLayar + 20;
+            plane2Y = (int) Math.floor(Math.random() * (tinggiLayar - ivPlane2.getHeight()));
+        }
+        ivPlane2.setX(plane2X);
+        ivPlane2.setY(plane2Y);
+
+
         // move plane
         if(action_flg == true){
             // touching
