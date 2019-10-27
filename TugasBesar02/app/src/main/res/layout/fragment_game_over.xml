@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GAME OVER"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:paddingBottom="2dp"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High Score : 0"
+            android:id="@+id/tv_over_highScore"
+            android:paddingBottom="15dp"
+            android:textSize="15dp"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="player name"
+            android:id="@+id/tv_over_playerName"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="player score : 0"
+            android:id="@+id/tv_over_playerScore"
+            >
+        </TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PLAY AGAIN"
+            android:id="@+id/btn_playAgain"
+            android:layout_marginTop="20dp"
+            >
+        </Button>
+
+    </LinearLayout>
+
+</FrameLayout>

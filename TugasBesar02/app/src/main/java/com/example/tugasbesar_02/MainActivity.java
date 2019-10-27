@@ -156,11 +156,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        };
     }
 
+    public void drawMusuh(Musuh musuh)
+    {
+        this.resetCanvas();
+        this.strokePaint = new Paint();
+        this.strokePaint.setColor(Color.BLUE);
+
+        this.mCanvas.drawCircle(musuh.getX(),musuh.getY(),musuh.getRadian() ,this.strokePaint);
+
+        this.ivCanvas.invalidate();
+
+    }
+
     @Override
     public void closeApp() {
         this.moveTaskToBack(true);
         this.finish();
     }
+
 
 
 }
