@@ -194,24 +194,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /*
-    kalo kena pesawat score -10
-    kalo kena bom score -20
+    kalo kena pesawat score -10 >> endgame
+    kalo kena bom score -20 >> endgame
+    kalo kena reward +=50
+    kalo kena fuel +=20
      */
     public void hitStatus(){
 
         int plane2DiaX = plane2X + (ivPlane2.getWidth() / 2);
         int plane2DiaY = plane2Y + (ivPlane2.getHeight() / 2);
 
+        int bombDiaX = bombX + (ivBomb.getWidth() / 2);
+        int bombDiaY = bombY + (ivBomb.getHeight() / 2);
+
         // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
         boolean nempel = 0<=plane2DiaX;
-        boolean sejajarDalamP1 = plane2DiaY <= planeSize;
-        boolean samaTinggiDalamP1 = planeY<=plane2DiaY;
+        boolean sejajarDalamP1 = ((plane2DiaY <= planeSize) || (bombDiaY<=planeSize));
+        boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)||(planeY<=bombY));
         boolean didalamP1 = plane2DiaY<=planeY+planeSize;
 
         if(nempel && sejajarDalamP1 && samaTinggiDalamP1 && didalamP1){
             this.score -= 10;
             plane2X -= 10;
         }
+
 
     }
 

@@ -16,6 +16,7 @@ public class MenuFragment extends DialogFragment implements View.OnClickListener
     protected Button btnStart;
     protected Button btnExit;
     protected FragmentListener listener;
+    protected MainActivity mainActivity;
 
     public MenuFragment() {
     }
@@ -41,10 +42,13 @@ public class MenuFragment extends DialogFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if(view.getId() == this.btnStart.getId()){
-            getFragmentManager().beginTransaction().remove(MenuFragment.this).commit();
+            if(this.etUsername.getText().equals("")==false){ //ada input username
+                this.mainActivity.tvScore.setText(this.etUsername.getText());
+            }
+            getFragmentManager().beginTransaction().remove(MenuFragment.this).commit(); //tutup dialog
         }
         else if(view.getId() == this.btnExit.getId()){
-            this.listener.closeApp();
+            this.listener.closeApp(); //keluar app
         }
     }
 

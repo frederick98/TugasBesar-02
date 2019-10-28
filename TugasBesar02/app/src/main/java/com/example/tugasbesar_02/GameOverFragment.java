@@ -16,6 +16,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     protected TextView tvPlayerName;
     protected TextView tvPlayerScore;
     protected Button btnPlayAgain;
+    protected MainActivity mainActivity;
 
     public GameOverFragment() {
     }
@@ -33,6 +34,9 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
 
         this.btnPlayAgain.setOnClickListener(this);
 
+        this.tvPlayerName.setText(this.mainActivity.tvPlayerName.getText());
+        this.tvPlayerScore.setText(this.mainActivity.tvScore.getText());
+
         return view;
     }
 
@@ -40,7 +44,6 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if(view.getId() == this.btnPlayAgain.getId()){
             getFragmentManager().beginTransaction().remove(GameOverFragment.this).commit();
-            //start game
         }
     }
 }
