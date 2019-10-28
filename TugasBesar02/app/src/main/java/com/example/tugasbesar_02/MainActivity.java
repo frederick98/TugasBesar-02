@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected ImageView ivPlane;
     protected ImageView ivPlane2;
     protected ImageView ivBomb;
+    protected ImageView ivFuel;
+    protected ImageView ivReward;
     protected FrameLayout flCanvas;
 
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int planeY;
     private int plane2X, plane2Y;
     private int bombX, bombY;
+    private int fuelX, fuelY;
+    private int rewardX, rewardY;
 
     // class initialization
     protected Handler handler = new Handler();
@@ -89,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.ivPlane = findViewById(R.id.iv_plane);
         this.ivPlane2 = findViewById(R.id.iv_plane_enemy);
         this.ivBomb = findViewById(R.id.iv_bomb);
+        this.ivFuel = findViewById(R.id.iv_fuel);
+        this.ivReward = findViewById(R.id.iv_reward);
 
         // setOnClickListener
         //this.btnStart.setOnClickListener(this);
@@ -109,6 +115,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.ivPlane2.setY(-80);
         this.ivBomb.setX(-80);
         this.ivBomb.setY(-80);
+        this.ivFuel.setX(-80);
+        this.ivFuel.setY(-80);
+        this.ivReward.setX(-80);
+        this.ivReward.setY(-80);
 
 
         tvScore.setText("Score : " + this.score);
@@ -123,6 +133,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void changePosition(){
         hitStatus();
+
+        // fuel
+        fuelX -= 3;
+        if(fuelX < 0){
+            fuelX = lebarLayar + 30;
+            fuelY = (int) Math.floor(Math.random() * (tinggiLayar - ivFuel.getHeight()));
+        }
+        ivFuel.setX(fuelX);
+        ivFuel.setY(fuelY);
+
+        // reward
+        rewardX -= 20;
+        if(rewardX < 0){
+            rewardX = lebarLayar + 15;
+            rewardY = (int) Math.floor(Math.random() * (tinggiLayar - ivReward.getHeight()));
+        }
+        ivReward.setX(rewardX);
+        ivReward.setY(rewardY);
 
         // plane2
         plane2X -= 10;
