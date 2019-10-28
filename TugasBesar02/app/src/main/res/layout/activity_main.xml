@@ -67,6 +67,15 @@
         android:layout_width="match_parent"
         android:layout_height="665dp">
 
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome! Please Tap to Start!"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            android:textSize="28sp"/>
+
         <ImageView
             android:id="@+id/iv_plane"
             android:layout_width="60dp"

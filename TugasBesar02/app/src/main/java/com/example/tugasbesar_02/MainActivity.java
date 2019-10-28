@@ -42,12 +42,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected FloatingActionButton fabMenu;
     protected TextView tvPlayerName;
     protected TextView tvScore;
+    private TextView tvWelcome;
     protected ImageView ivPlane;
     protected ImageView ivPlane2;
     protected ImageView ivBomb;
     protected ImageView ivFuel;
     protected ImageView ivReward;
     protected FrameLayout flCanvas;
+
+    protected EnemyPlane enemyPlane;
 
 
     // buat ngatur supaya object ga kluar dari canvas
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.fabMenu = findViewById(R.id.fab_menu);
         this.tvScore = findViewById(R.id.tv_score);
         this.tvPlayerName = findViewById(R.id.tv_playerName);
+        this.tvWelcome = findViewById(R.id.tv_welcome);
         this.ivPlane = findViewById(R.id.iv_plane);
         this.ivPlane2 = findViewById(R.id.iv_plane_enemy);
         this.ivBomb = findViewById(R.id.iv_bomb);
@@ -111,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tinggiLayar = displaySize.y;
 
         // bersihin si layar jd cuma nampilin pesawat kita doang
-        this.ivPlane2.setX(-80);
-        this.ivPlane2.setY(-80);
+        //this.ivPlane2.setX(-80);
+        //this.ivPlane2.setY(-80);
         this.ivBomb.setX(-80);
         this.ivBomb.setY(-80);
         this.ivFuel.setX(-80);
@@ -123,12 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         tvScore.setText("Score : " + this.score);
 
+        this.enemyPlane = new EnemyPlane(this);
 
-        /*
-        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
-        this.ivPesawat.setOnTouchListener(onTouchListener());
 
-         */
     }
 
     public void changePosition(){
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ivReward.setX(rewardX);
         ivReward.setY(rewardY);
 
+        /*
         // plane2
         plane2X -= 10;
         if(plane2X < 0){
@@ -160,6 +162,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         ivPlane2.setX(plane2X);
         ivPlane2.setY(plane2Y);
+
+         */
+
+
+        this.enemyPlane.spawn();
 
         // bomb
         bombX -= 5;
@@ -226,6 +233,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(activityStart == false){
             activityStart = true;
+
+            this.tvWelcome.setVisibility(View.GONE);
 
             /*
             frame height and plane height nya baru diset disini soalnya di method
