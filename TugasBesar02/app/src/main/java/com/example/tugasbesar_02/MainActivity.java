@@ -32,14 +32,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected ImageView ivPlane;
     protected FrameLayout flCanvas;
 
+
+    // class initialization
+    protected Handler handler = new Handler();
+    protected Timer timer = new Timer();
     protected Plane plane;
     protected EnemyPlane enemyPlane;
     protected Bomb bomb;
     protected Fuel fuel;
     protected Reward reward;
-
-    protected String url;
     protected MyAsyncTask requester;
+    protected String url;
 
 
     // buat ngatur supaya object ga kluar dari canvas
@@ -48,10 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // object position
     private int planeY;
-
-    // class initialization
-    protected Handler handler = new Handler();
-    protected Timer timer = new Timer();
 
     // buat cek status 
     protected boolean action_flg = false;
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void changePosition() {
         // method ini melakukan pengecekan jika objek kena ke pesawat
-        //hitStatus();
+        hitStatus();
 
         // spawn object
         this.enemyPlane.spawn();
@@ -267,19 +266,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requester = new MyAsyncTask(this);
         requester.execute(this.tvScore.getText().toString(),url);
     }
-    /*
-    public void drawMusuh(Musuh musuh)
-    {
-        this.resetCanvas();
-        this.strokePaint = new Paint();
-        this.strokePaint.setColor(Color.BLUE);
-
-        this.mCanvas.drawCircle(musuh.getX(),musuh.getY(),musuh.getRadian() ,this.strokePaint);
-
-        this.ivCanvas.invalidate();
-
-    }
-     */
-
-
 }
