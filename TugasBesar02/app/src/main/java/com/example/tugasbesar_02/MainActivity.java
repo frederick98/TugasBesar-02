@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected ImageView ivPlane;
     protected FrameLayout flCanvas;
 
+    protected Plane plane;
     protected EnemyPlane enemyPlane;
     protected Bomb bomb;
     protected Fuel fuel;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     // buat ngatur supaya object ga kluar dari canvas
-    private int planeSize;
+    private int planeHeight;
     private int canvasHeight;
 
     // object position
@@ -52,13 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected Timer timer = new Timer();
 
     // buat cek status 
-    private boolean action_flg = false;
-    private boolean activityStart = false;
+    protected boolean action_flg = false;
+    protected boolean activityStart = false;
 
     // scoring
     protected int score = 0;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         tvScore.setText("Score : " + this.score);
 
+        this.plane = new Plane(this);
         this.enemyPlane = new EnemyPlane(this);
         this.bomb = new Bomb(this);
         this.fuel = new Fuel(this);
@@ -86,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.url = "http://p3b.labftis.net/api.php";
     }
 
-    public void changePosition(){
+    public void changePosition() {
         // method ini melakukan pengecekan jika objek kena ke pesawat
-        hitStatus();
+        //hitStatus();
 
         // spawn object
         this.enemyPlane.spawn();
@@ -110,12 +111,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(planeY < 0){
             planeY = 0;
         }
-        if(planeY > (canvasHeight - planeSize)){
-            planeY = canvasHeight - planeSize;
+        if(planeY > (canvasHeight - planeHeight)){
+            planeY = (canvasHeight - planeHeight);
         }
-
         ivPlane.setY(planeY);
-
     }
 
     /*
@@ -125,26 +124,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     kalo kena fuel +=20
      */
 
-    // lagi coba dulu ke enemyplane.java
     public void hitStatus(){
         int plane2DiaX = this.enemyPlane.getX() + (this.enemyPlane.getWidth() / 2);
         int plane2DiaY = this.enemyPlane.getY() + (this.enemyPlane.getHeight() / 2);
 
         // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
-        // kalo kena bom atau pesawat, game over >> tampilin fragment gameover
-        boolean nempel = 0<=plane2DiaX;
-        boolean sejajarDalamP1 = ((plane2DiaY <= planeSize)); //|| (bombDiaY<=planeSize));
-        boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)); //||(planeY<=bombY));
-        boolean didalamP1 = plane2DiaY<=planeY+planeSize;
+       boolean nempel=ivPlane.getX()==this.enemyPlane.getX();
+       boolean nempel2 =ivPlane.getY()==this.enemyPlane.getY();
+        //boolean nempel = 0<=plane2DiaX;
+        //boolean sejajarDalamP1 = ((plane2DiaY <= planeSize)); //|| (bombDiaY<=planeSize));
+        //boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)); //||(planeY<=bombY));
+        //boolean didalamP1 = plane2DiaY<=planeY+planeSize;
 
-        if(nempel && sejajarDalamP1 && samaTinggiDalamP1 && didalamP1){
+        if(nempel && nempel2){
             this.score -= 10;
+            this.tvScore.setText("Score: " + this.score);
             this.enemyPlane.setX(this.enemyPlane.x -= 10);
 
             // stop playing
-            timer.cancel();
-            timer = null;
-
+           // this.timer.cancel();
+            //this.timer = null;
             this.gameSelesai();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             GameOverFragment gameOverDialogFragment = new GameOverFragment();
@@ -158,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(activityStart == false){
             activityStart = true;
-
             this.tvWelcome.setVisibility(View.GONE);
 
             /*
@@ -171,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             this.planeY = (int) ivPlane.getY();
 
-            planeSize = ivPlane.getHeight();
+            planeHeight = ivPlane.getHeight();
 
 
             timer.schedule(new TimerTask() {
