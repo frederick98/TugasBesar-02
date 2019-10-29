@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected Bitmap mBitmap;
     protected Canvas mCanvas;
     protected Paint strokePaint;
-    protected Button btnStart;
     protected FloatingActionButton fabPause;
     protected FloatingActionButton fabMenu;
     protected TextView tvPlayerName;
@@ -36,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected Bomb bomb;
     protected Fuel fuel;
     protected Reward reward;
+
+    protected String url;
+    protected MyAsyncTask requester;
 
 
     // buat ngatur supaya object ga kluar dari canvas
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.bomb = new Bomb(this);
         this.fuel = new Fuel(this);
         this.reward = new Reward(this);
+
+        this.url = "http://p3b.labftis.net/api.php";
     }
 
     public void changePosition(){
@@ -126,10 +130,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int plane2DiaX = this.enemyPlane.getX() + (this.enemyPlane.getWidth() / 2);
         int plane2DiaY = this.enemyPlane.getY() + (this.enemyPlane.getHeight() / 2);
 
-        //int bombDiaX = bombX + (ivBomb.getWidth() / 2);
-        //int bombDiaY = bombY + (ivBomb.getHeight() / 2);
-
         // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
+        // kalo kena bom atau pesawat, game over >> tampilin fragment gameover
         boolean nempel = 0<=plane2DiaX;
         boolean sejajarDalamP1 = ((plane2DiaY <= planeSize)); //|| (bombDiaY<=planeSize));
         boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)); //||(planeY<=bombY));
@@ -142,9 +144,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // stop playing
             timer.cancel();
             timer = null;
+
+            this.gameSelesai();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            GameOverFragment gameOverDialogFragment = new GameOverFragment();
+            //gameOverDialogFragment.show(ft,this.tvScore.getText().toString()); << ini masih bingung error dimana
         }
 
-
+        this.tvScore.setText("Score : "+this.score);
     }
 
     public boolean onTouchEvent(MotionEvent motionEvent){
@@ -237,10 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-       if(btnStart.getId() == view.getId()) {
-           //this.initiateCanvas();
-       }
-       else if(view.getId() == this.fabPause.getId()){
+       if(view.getId() == this.fabPause.getId()){
            //jika ic_pause >> pause game
            FragmentTransaction ft = getFragmentManager().beginTransaction();
            PauseFragment pauseDialogFragment = new PauseFragment();
@@ -252,6 +256,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            MenuFragment menuDialogFragment = new MenuFragment();
            //menuDialogFragment.show(ft,this.tv_playerName.getText().toString()); <<Ini bingung salah dimana
        }
+    }
+
+    @Override
+    public void closeApp() {
+        this.moveTaskToBack(true);
+        this.finish();
+    }
+
+    //ketika gameover, panggil method ini untuk post scorenya ke wbs
+    public void gameSelesai(){
+        requester = new MyAsyncTask(this);
+        requester.execute(this.tvScore.getText().toString(),url);
     }
     /*
     public void drawMusuh(Musuh musuh)
@@ -267,9 +283,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
      */
 
-    @Override
-    public void closeApp() {
-        this.moveTaskToBack(true);
-        this.finish();
-    }
+
 }

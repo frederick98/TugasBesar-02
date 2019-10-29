@@ -3,6 +3,7 @@ package com.example.tugasbesar_02;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class GameOverFragment extends Fragment implements View.OnClickListener {
+public class GameOverFragment extends DialogFragment implements View.OnClickListener {
     protected TextView tvHighScore;
     protected TextView tvPlayerName;
     protected TextView tvPlayerScore;
