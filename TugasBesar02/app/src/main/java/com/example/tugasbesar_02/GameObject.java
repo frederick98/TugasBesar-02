@@ -14,24 +14,7 @@ public abstract class GameObject {
 
     }
 
-    protected void setX(int x){
-        this.x = x;
-    }
-
-    protected int getX(){
-        return this.x;
-    }
-
-    protected void setY(int y){
-        this.y = y;
-    }
-
-    protected int getY(){
-        return this.y;
-    }
-
     protected void spawn(){
-
 
     }
 

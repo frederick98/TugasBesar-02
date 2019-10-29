@@ -3,20 +3,20 @@ package com.example.tugasbesar_02;
 import android.app.Activity;
 import android.widget.ImageView;
 
-public class EnemyPlane extends GameObject{
-    protected ImageView ivPlane2;
+public class Reward extends GameObject{
+    protected ImageView ivReward;
     protected int x;
     protected int y;
     protected Activity activity;
 
-    public EnemyPlane(Activity activity) {
+    public Reward(Activity activity){
         this.activity = activity;
         super.getDisplayLayout(activity);
-        this.ivPlane2 = this.activity.findViewById(R.id.iv_plane_enemy);
+        this.ivReward = this.activity.findViewById(R.id.iv_reward);
 
         // command dibawah ini buat set supaya si objek ga spawn dulu di awal activity launch
-        this.ivPlane2.setX(-80);
-        this.ivPlane2.setY(-80);
+        this.ivReward.setX(-80);
+        this.ivReward.setY(-80);
     }
 
     protected void setX(int x){
@@ -36,12 +36,12 @@ public class EnemyPlane extends GameObject{
     }
 
     protected void spawn(){
-        this.x -= 10;
+        this.x -= 5;
         if(this.x < 0){
-            this.x = super.lebarLayar + 20;
-            this.y = (int) Math.floor(Math.random() * (super.tinggiLayar - this.ivPlane2.getHeight()));
+            this.x = super.lebarLayar + 12;
+            this.y = (int) Math.floor(Math.random() * (super.tinggiLayar - this.ivReward.getHeight()));
         }
-        this.ivPlane2.setX(this.x);
-        this.ivPlane2.setY(this.y);
+        this.ivReward.setX(this.x);
+        this.ivReward.setY(this.y);
     }
 }

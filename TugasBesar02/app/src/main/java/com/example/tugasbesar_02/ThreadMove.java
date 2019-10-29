@@ -4,27 +4,28 @@ import android.util.Log;
 
 import java.util.Random;
 
+/*
 public class ThreadMove implements Runnable {
 
     protected UIHandler uiHandler;
     protected Thread thread;
-    protected Musuh musuh;
+    //protected Musuh musuh;
     protected boolean status=true;
 
     public ThreadMove(UIHandler uiHandler,Musuh bomusuhla)
     {
         this.uiHandler=uiHandler;
         this.thread = new Thread(this);
-        this.musuh = musuh;
+        //this.musuh = musuh;
     }
 
 
 
     @Override
     public void run() {
-        while(this.musuh.isInside()) {
-            this.musuh.Update();
-            this.uiHandler.setMusuhMove(this.musuh);
+        //while(this.musuh.isInside()) {
+            //this.musuh.Update();
+            //this.uiHandler.setMusuhMove(this.musuh);
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {
@@ -40,3 +41,5 @@ public class ThreadMove implements Runnable {
         this.thread.start();
     }
 }
+
+ */

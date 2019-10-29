@@ -4,7 +4,7 @@ package com.example.tugasbesar_02;
 import android.os.Handler;
 import android.os.Message;
 
-
+/*
 public class UIHandler extends Handler {
 
     protected MainActivity activity;
@@ -32,8 +32,6 @@ public class UIHandler extends Handler {
             //this.activity.drawMusuh(musuh);
         }
     }
-
-
-
-
 }
+
+ */

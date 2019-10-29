@@ -1,32 +1,18 @@
 package com.example.tugasbesar_02;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-
-import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Display;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -42,28 +28,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected FloatingActionButton fabMenu;
     protected TextView tvPlayerName;
     protected TextView tvScore;
-    private TextView tvWelcome;
+    protected TextView tvWelcome;
     protected ImageView ivPlane;
-    protected ImageView ivPlane2;
-    protected ImageView ivBomb;
-    protected ImageView ivFuel;
-    protected ImageView ivReward;
     protected FrameLayout flCanvas;
 
     protected EnemyPlane enemyPlane;
+    protected Bomb bomb;
+    protected Fuel fuel;
+    protected Reward reward;
 
 
     // buat ngatur supaya object ga kluar dari canvas
     private int planeSize;
     private int canvasHeight;
-    private int lebarLayar, tinggiLayar;
 
     // object position
     private int planeY;
-    private int plane2X, plane2Y;
-    private int bombX, bombY;
-    private int fuelX, fuelY;
-    private int rewardX, rewardY;
 
     // class initialization
     protected Handler handler = new Handler();
@@ -76,107 +56,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // scoring
     protected int score = 0;
 
-    /*
-    private ViewGroup mainLayout;
-    private int xDelta;
-    private int yDelta;
-
-     */
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.btnStart = findViewById(R.id.btn_start);
+
         this.fabPause = findViewById(R.id.fab_pause);
         this.fabMenu = findViewById(R.id.fab_menu);
         this.tvScore = findViewById(R.id.tv_score);
         this.tvPlayerName = findViewById(R.id.tv_playerName);
         this.tvWelcome = findViewById(R.id.tv_welcome);
         this.ivPlane = findViewById(R.id.iv_plane);
-        this.ivPlane2 = findViewById(R.id.iv_plane_enemy);
-        this.ivBomb = findViewById(R.id.iv_bomb);
-        this.ivFuel = findViewById(R.id.iv_fuel);
-        this.ivReward = findViewById(R.id.iv_reward);
 
         // setOnClickListener
-        //this.btnStart.setOnClickListener(this);
         this.fabPause.setOnClickListener(this);
         this.fabMenu.setOnClickListener(this);
-
-        // buat dapetin ukuran layar trus set ke ukuranLayar
-        WindowManager windowManager = getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        Point displaySize = new Point();
-        display.getSize(displaySize);
-
-        lebarLayar = displaySize.x;
-        tinggiLayar = displaySize.y;
-
-        // bersihin si layar jd cuma nampilin pesawat kita doang
-        //this.ivPlane2.setX(-80);
-        //this.ivPlane2.setY(-80);
-        this.ivBomb.setX(-80);
-        this.ivBomb.setY(-80);
-        this.ivFuel.setX(-80);
-        this.ivFuel.setY(-80);
-        this.ivReward.setX(-80);
-        this.ivReward.setY(-80);
-
 
         tvScore.setText("Score : " + this.score);
 
         this.enemyPlane = new EnemyPlane(this);
-
-
+        this.bomb = new Bomb(this);
+        this.fuel = new Fuel(this);
+        this.reward = new Reward(this);
     }
 
     public void changePosition(){
-        hitStatus();
-
-        // fuel
-        fuelX -= 3;
-        if(fuelX < 0){
-            fuelX = lebarLayar + 30;
-            fuelY = (int) Math.floor(Math.random() * (tinggiLayar - ivFuel.getHeight()));
-        }
-        ivFuel.setX(fuelX);
-        ivFuel.setY(fuelY);
-
-        // reward
-        rewardX -= 20;
-        if(rewardX < 0){
-            rewardX = lebarLayar + 15;
-            rewardY = (int) Math.floor(Math.random() * (tinggiLayar - ivReward.getHeight()));
-        }
-        ivReward.setX(rewardX);
-        ivReward.setY(rewardY);
-
-        /*
-        // plane2
-        plane2X -= 10;
-        if(plane2X < 0){
-            plane2X = lebarLayar + 20;
-            plane2Y = (int) Math.floor(Math.random() * (tinggiLayar - ivPlane2.getHeight()));
-        }
-        ivPlane2.setX(plane2X);
-        ivPlane2.setY(plane2Y);
-
-         */
-
+        //hitStatus();
 
         this.enemyPlane.spawn();
-
-        // bomb
-        bombX -= 5;
-        if(bombX < 0){
-            bombX = lebarLayar + 12;
-            bombY = (int) Math.floor(Math.random() * (tinggiLayar - ivBomb.getHeight()));
-        }
-        ivBomb.setX(bombX);
-        ivBomb.setY(bombY);
-
+        this.bomb.spawn();
+        this.fuel.spawn();
+        this.reward.spawn();
 
         // move plane, dibuat kalo touch nanti naek, kalo release nanti turun
         if(action_flg == true){
@@ -206,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     kalo kena reward +=50
     kalo kena fuel +=20
      */
+    /*
     public void hitStatus(){
 
         int plane2DiaX = plane2X + (ivPlane2.getWidth() / 2);
@@ -227,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+
+     */
 
 
     public boolean onTouchEvent(MotionEvent motionEvent){
@@ -396,8 +311,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.moveTaskToBack(true);
         this.finish();
     }
-
-
-
-
 }
