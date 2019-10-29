@@ -83,8 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void changePosition(){
-        //hitStatus();
+        // method ini melakukan pengecekan jika objek kena ke pesawat
+        hitStatus();
 
+        // spawn object
         this.enemyPlane.spawn();
         this.bomb.spawn();
         this.fuel.spawn();
@@ -118,31 +120,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     kalo kena reward +=50
     kalo kena fuel +=20
      */
-    /*
+
+    // lagi coba dulu ke enemyplane.java
     public void hitStatus(){
+        int plane2DiaX = this.enemyPlane.getX() + (this.enemyPlane.getWidth() / 2);
+        int plane2DiaY = this.enemyPlane.getY() + (this.enemyPlane.getHeight() / 2);
 
-        int plane2DiaX = plane2X + (ivPlane2.getWidth() / 2);
-        int plane2DiaY = plane2Y + (ivPlane2.getHeight() / 2);
-
-        int bombDiaX = bombX + (ivBomb.getWidth() / 2);
-        int bombDiaY = bombY + (ivBomb.getHeight() / 2);
+        //int bombDiaX = bombX + (ivBomb.getWidth() / 2);
+        //int bombDiaY = bombY + (ivBomb.getHeight() / 2);
 
         // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
         boolean nempel = 0<=plane2DiaX;
-        boolean sejajarDalamP1 = ((plane2DiaY <= planeSize) || (bombDiaY<=planeSize));
-        boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)||(planeY<=bombY));
+        boolean sejajarDalamP1 = ((plane2DiaY <= planeSize)); //|| (bombDiaY<=planeSize));
+        boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)); //||(planeY<=bombY));
         boolean didalamP1 = plane2DiaY<=planeY+planeSize;
 
         if(nempel && sejajarDalamP1 && samaTinggiDalamP1 && didalamP1){
             this.score -= 10;
-            plane2X -= 10;
+            this.enemyPlane.setX(this.enemyPlane.x -= 10);
+
+            // stop playing
+            timer.cancel();
+            timer = null;
         }
 
 
     }
-
-     */
-
 
     public boolean onTouchEvent(MotionEvent motionEvent){
 
@@ -250,48 +253,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            //menuDialogFragment.show(ft,this.tv_playerName.getText().toString()); <<Ini bingung salah dimana
        }
     }
-
-    
-    /*
-    private View.OnTouchListener onTouchListener(){
-       return new View.OnTouchListener() {
-           @SuppressLint("ClickableViewAccessibility")
-           @Override
-           public boolean onTouch(View view, MotionEvent motionEvent) {
-               final int x = (int) motionEvent.getRawX();
-               final int y = (int) motionEvent.getRawY();
-
-               switch(motionEvent.getAction() & MotionEvent.ACTION_MASK){
-                   case MotionEvent.ACTION_DOWN:
-                       LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams)
-                               view.getLayoutParams();
-
-                       //xDelta = x - lParams.leftMargin;
-                       //yDelta = y - lParams.topMargin;
-                       break;
-
-                   case MotionEvent.ACTION_UP:
-                       Toast.makeText(MainActivity.this,
-                               "thanks for new location!", Toast.LENGTH_SHORT)
-                               .show();
-                       break;
-
-                   case MotionEvent.ACTION_MOVE:
-                       LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view
-                               .getLayoutParams();
-                       layoutParams.leftMargin = x - xDelta;
-                       layoutParams.topMargin = y - yDelta;
-                       layoutParams.rightMargin = 0;
-                       layoutParams.bottomMargin = 0;
-                       view.setLayoutParams(layoutParams);
-                       break;
-               }
-               //mainLayout.invalidate();
-               return true;
-           }
-       };
-    }
-
     /*
     public void drawMusuh(Musuh musuh)
     {

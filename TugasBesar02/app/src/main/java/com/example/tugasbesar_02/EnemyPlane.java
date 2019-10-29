@@ -24,7 +24,7 @@ public class EnemyPlane extends GameObject{
     }
 
     protected int getX(){
-        return this.x;
+        return (int) this.ivPlane2.getX();
     }
 
     protected void setY(int y){
@@ -32,7 +32,15 @@ public class EnemyPlane extends GameObject{
     }
 
     protected int getY(){
-        return this.y;
+        return (int) this.ivPlane2.getX();
+    }
+
+    protected int getHeight(){
+        return this.ivPlane2.getHeight();
+    }
+
+    protected int getWidth(){
+        return this.ivPlane2.getWidth();
     }
 
     protected void spawn(){
