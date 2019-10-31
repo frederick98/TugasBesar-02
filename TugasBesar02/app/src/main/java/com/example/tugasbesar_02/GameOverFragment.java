@@ -17,11 +17,14 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
     protected TextView tvPlayerName;
     protected TextView tvPlayerScore;
     protected Button btnPlayAgain;
-    protected MainActivity mainActivity;
 
     public GameOverFragment() {
     }
 
+    public static GameOverFragment newInstance() {
+        GameOverFragment fragment = new GameOverFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,14 +32,14 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
         View view =  inflater.inflate(R.layout.fragment_game_over, container, false);
 
         this.tvHighScore = view.findViewById(R.id.tv_over_highScore);
-        this.tvPlayerName = view.findViewById(R.id.tv_playerName);
+        this.tvPlayerName = view.findViewById(R.id.tv_over_playerName);
         this.tvPlayerScore = view.findViewById(R.id.tv_over_playerScore);
         this.btnPlayAgain = view.findViewById(R.id.btn_playAgain);
 
         this.btnPlayAgain.setOnClickListener(this);
 
-        this.tvPlayerName.setText(this.mainActivity.tvPlayerName.getText());
-        this.tvPlayerScore.setText(this.mainActivity.tvScore.getText());
+        this.tvPlayerName.setText(getTag());
+//        this.tvPlayerScore.setText("Score : "+this.activity.tvScore.getText().toString());
 
         return view;
     }

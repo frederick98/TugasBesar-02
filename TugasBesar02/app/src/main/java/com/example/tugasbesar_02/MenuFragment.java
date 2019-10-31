@@ -43,7 +43,8 @@ public class MenuFragment extends DialogFragment implements View.OnClickListener
     public void onClick(View view) {
         if(view.getId() == this.btnStart.getId()){
             if(this.etUsername.getText().equals("")==false){ //ada input username
-                this.mainActivity.tvScore.setText(this.etUsername.getText());
+                //update nama user di mainAct
+                //this.mainActivity.tvPlayerName.setText(this.etUsername.getText().toString());
             }
             getFragmentManager().beginTransaction().remove(MenuFragment.this).commit(); //tutup dialog
         }

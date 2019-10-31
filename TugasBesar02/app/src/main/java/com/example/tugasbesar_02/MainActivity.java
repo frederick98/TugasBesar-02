@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected FloatingActionButton fabPause;
     protected FloatingActionButton fabMenu;
     protected TextView tvPlayerName;
-    protected TextView tvScore;
+    public TextView tvScore;
     protected TextView tvWelcome;
     protected ImageView ivPlane;
     protected FrameLayout flCanvas;
@@ -141,12 +141,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.enemyPlane.setX(this.enemyPlane.x -= 10);
 
             // stop playing
-           // this.timer.cancel();
-            //this.timer = null;
+            this.timer.cancel();
+            this.timer = null;
             this.gameSelesai();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             GameOverFragment gameOverDialogFragment = new GameOverFragment();
-            //gameOverDialogFragment.show(ft,this.tvScore.getText().toString()); << ini masih bingung error dimana
+            gameOverDialogFragment.show(ft,this.tvPlayerName.getText().toString());
         }
 
         this.tvScore.setText("Score : "+this.score);
@@ -243,15 +243,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
        if(view.getId() == this.fabPause.getId()){
            //jika ic_pause >> pause game
-           FragmentTransaction ft = getFragmentManager().beginTransaction();
+           androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
            PauseFragment pauseDialogFragment = new PauseFragment();
-           //pauseDialogFragment.show(ft,this.tv_score.getText().toString()); <<Ini bingung salah dimana
+           pauseDialogFragment.show(ft,"");
        }
        else if(view.getId() == this.fabMenu.getId()){
            //jika ic_menu >> tampilkan menu
-           FragmentTransaction ft = getFragmentManager().beginTransaction();
+           androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
            MenuFragment menuDialogFragment = new MenuFragment();
-           //menuDialogFragment.show(ft,this.tv_playerName.getText().toString()); <<Ini bingung salah dimana
+           menuDialogFragment.show(ft,"");
        }
     }
 
@@ -265,5 +265,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void gameSelesai(){
         requester = new MyAsyncTask(this);
         requester.execute(this.tvScore.getText().toString(),url);
+    }
+
+    public int getScore(){
+        return this.score;
     }
 }

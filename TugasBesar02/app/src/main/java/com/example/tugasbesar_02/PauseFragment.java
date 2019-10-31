@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 
 public class PauseFragment extends DialogFragment implements View.OnClickListener {

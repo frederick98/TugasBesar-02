@@ -7,8 +7,8 @@
     android:layout_centerVertical="true">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="270dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:gravity="center">
 
