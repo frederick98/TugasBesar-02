@@ -5,8 +5,8 @@ import android.widget.ImageView;
 
 public class Fuel extends GameObject{
     protected ImageView ivFuel;
-    protected int x;
-    protected int y;
+    protected int x = -80;
+    protected int y = -80;
     protected Activity activity;
 
     public Fuel(Activity activity){
@@ -15,24 +15,32 @@ public class Fuel extends GameObject{
         this.ivFuel = this.activity.findViewById(R.id.iv_fuel);
 
         // command dibawah ini buat set supaya si objek ga spawn dulu di awal activity launch
-        this.ivFuel.setX(-80);
-        this.ivFuel.setY(-80);
+        this.ivFuel.setX(x);
+        this.ivFuel.setY(y);
     }
 
     protected void setX(int x){
-        this.x = x;
+        this.ivFuel.setX(x);
     }
 
     protected int getX(){
-        return this.x;
+        return (int) ivFuel.getX();
     }
 
     protected void setY(int y){
-        this.y = y;
+        this.ivFuel.setY(y);
     }
 
     protected int getY(){
-        return this.y;
+        return (int) ivFuel.getY();
+    }
+
+    protected int getHeight(){
+        return ivFuel.getHeight();
+    }
+
+    protected int getWidth(){
+        return ivFuel.getWidth();
     }
 
     protected void spawn(){

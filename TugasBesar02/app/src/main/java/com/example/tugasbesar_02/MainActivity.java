@@ -1,7 +1,7 @@
 package com.example.tugasbesar_02;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.FragmentTransaction;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,11 +20,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected FloatingActionButton fabPause;
     protected FloatingActionButton fabMenu;
     protected TextView tvPlayerName;
-    public TextView tvScore;
+    protected TextView tvScore;
     protected TextView tvWelcome;
     protected ImageView ivPlane;
     protected FrameLayout flCanvas;
-
 
     // class initialization
     protected Handler handler = new Handler();
@@ -85,17 +84,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // spawn object
         this.enemyPlane.spawn();
-        //this.bomb.spawn();
-        //this.fuel.spawn();
-        //this.reward.spawn();
+        this.bomb.spawn();
+        this.fuel.spawn();
+        this.reward.spawn();
 
         // move plane, dibuat kalo touch nanti naek, kalo release nanti turun
         if(action_flg == true){
-            // touching
+            // touching screen
             planeY -= 20;
         }
         else{
-            // release
+            // release screen
             planeY += 20;
         }
 
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvScore.setText("Score : " + this.score);
     }
 
-    // method ini untuk membuat si object plane dibatasi movementnya sama canvasnya
+    // method ini untuk membuat si object plane dibatasi movementnya supaya sama dgn canvasnya
     private void canvasLimit(){
         // check plane position
         if(planeY < 0){
@@ -123,23 +122,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     kalo kena fuel +=20
      */
     public void hitStatus(){
-        // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
+        // ngitungnya kalo enemyPlane kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
         int plane2DiaX = enemyPlane.getX() + enemyPlane.getWidth() / 2;
         int plane2DiaY = enemyPlane.getY() + enemyPlane.getHeight() / 2;
-
-        Log.d("zz", plane2DiaX+"");
-        Log.d("zz", plane2DiaY+"");
 
         boolean kena = 0<=plane2DiaX;
         boolean kena2 = plane2DiaX<=planeHeight;
         boolean kena3 = planeY<=plane2DiaY;
         boolean kena4 = plane2DiaY<=planeY+planeHeight;
 
+        // ngitungnya kalo bomb kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
+        int bombDiaX = bomb.getX() + bomb.getWidth() / 2;
+        int bombDiaY = bomb.getY() + bomb.getHeight() / 2;
+
+        boolean kenaBomb = 0<=bombDiaX;
+        boolean kenaBomb2 = bombDiaX<=planeHeight;
+        boolean kenaBomb3 = planeY<=bombDiaY;
+        boolean kenaBomb4 = bombDiaY<=planeY+planeHeight;
+
+        // ngitungnya kalo fuel kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
+        int fuelDiaX = fuel.getX() + fuel.getWidth() / 2;
+        int fuelDiaY = fuel.getY() + fuel.getHeight() / 2;
+
+        boolean kenaFuel = 0<=fuelDiaX;
+        boolean kenaFuel2 = fuelDiaX<=planeHeight;
+        boolean kenaFuel3 = planeY<=fuelDiaY;
+        boolean kenaFuel4 = fuelDiaY<=planeY+planeHeight;
+
+        // ngitungnya kalo reward kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
+        int rewardDiaX = reward.getX() + reward.getWidth() / 2;
+        int rewardDiaY = reward.getY() + reward.getHeight() / 2;
+
+        boolean kenaReward = 0<=rewardDiaX;
+        boolean kenaReward2 = rewardDiaX<=planeHeight;
+        boolean kenaReward3 = planeY<=rewardDiaY;
+        boolean kenaReward4 = rewardDiaY<=planeY+planeHeight;
+
         if(kena && kena2 && kena3 && kena4){
-            Log.d("zz", "kena " + kena);
-             Log.d("zz", "kena2 " + kena2);
-            Log.d("zz", "kena3 " + kena3);
-            Log.d("zz", "kena4 " + kena4);
             this.score -= 10;
             enemyPlane.setX(enemyPlane.x -= 10);
 
@@ -152,6 +171,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             GameOverFragment gameOverDialogFragment = new GameOverFragment();
             gameOverDialogFragment.show(ft,this.tvPlayerName.getText().toString());
+        }
+        else if(kenaBomb && kenaBomb2 && kenaBomb3 && kenaBomb4){
+            this.score -= 20;
+            bomb.setX(bomb.x -= 10);
+
+            this.tvScore.setText("Score: " + this.score);
+
+            // stop playing
+            this.timer.cancel();
+            this.timer = null;
+            this.gameSelesai();
+            androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            GameOverFragment gameOverDialogFragment = new GameOverFragment();
+            gameOverDialogFragment.show(ft,this.tvPlayerName.getText().toString());
+        }
+        else if(kenaReward && kenaReward2 && kenaReward3 && kenaReward4){
+            this.score += 50;
+            reward.setX(reward.x -= 10);
+        }
+        else if(kenaFuel && kenaFuel2 && kenaFuel3 && kenaFuel4){
+            this.score += 20;
+            fuel.setX(fuel.x -= 10);
         }
 
         this.tvScore.setText("Score : "+this.score);
@@ -170,11 +211,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             */
             this.flCanvas = findViewById(R.id.frame_canvas);
             canvasHeight = flCanvas.getHeight();
-
-            this.planeY = (int) ivPlane.getY();
-
+            planeY = (int) ivPlane.getY();
             planeHeight = ivPlane.getHeight();
-
 
             timer.schedule(new TimerTask() {
                 @Override
@@ -186,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
                 }
-            }, 0, 20);  //manggil method changePosition setiap 20ms
+            }, 0, 20);  // manggil method changePosition setiap 20ms
         }
         else{
             if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
@@ -196,8 +234,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 action_flg = false;
             }
         }
-
-
         return true;
     }
 
@@ -223,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.finish();
     }
 
-    //ketika gameover, panggil method ini untuk post scorenya ke wbs
+    // ketika gameover, panggil method ini untuk post scorenya ke wbs
     public void gameSelesai(){
         requester = new MyAsyncTask(this);
         requester.execute(this.tvScore.getText().toString(),url);

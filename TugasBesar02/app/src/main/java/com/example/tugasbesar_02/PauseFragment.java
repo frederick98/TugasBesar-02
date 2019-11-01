@@ -1,7 +1,5 @@
 package com.example.tugasbesar_02;
 
-
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
-
 
 public class PauseFragment extends DialogFragment implements View.OnClickListener {
     protected Button btnUnpause;

@@ -5,8 +5,8 @@ import android.widget.ImageView;
 
 public class Reward extends GameObject{
     protected ImageView ivReward;
-    protected int x;
-    protected int y;
+    protected int x = -80;
+    protected int y = -80;
     protected Activity activity;
 
     public Reward(Activity activity){
@@ -15,25 +15,35 @@ public class Reward extends GameObject{
         this.ivReward = this.activity.findViewById(R.id.iv_reward);
 
         // command dibawah ini buat set supaya si objek ga spawn dulu di awal activity launch
-        this.ivReward.setX(-80);
-        this.ivReward.setY(-80);
+        this.ivReward.setX(x);
+        this.ivReward.setY(y);
     }
 
     protected void setX(int x){
-        this.x = x;
+        this.ivReward.setX(x);
     }
 
     protected int getX(){
-        return this.x;
+        return (int) this.ivReward.getX();
     }
 
     protected void setY(int y){
-        this.y = y;
+        this.ivReward.setY(y);
     }
 
     protected int getY(){
-        return this.y;
+        return (int) this.ivReward.getY();
     }
+
+
+    protected int getHeight(){
+        return ivReward.getHeight();
+    }
+
+    protected int getWidth(){
+        return ivReward.getWidth();
+    }
+
 
     protected void spawn(){
         this.x -= 5;

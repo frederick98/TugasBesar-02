@@ -5,8 +5,8 @@ import android.widget.ImageView;
 
 public class Bomb extends GameObject{
     protected ImageView ivBomb;
-    protected int x;
-    protected int y;
+    protected int x = -80;
+    protected int y = -80;
     protected Activity activity;
 
     public Bomb(Activity activity){
@@ -15,24 +15,32 @@ public class Bomb extends GameObject{
         this.ivBomb = this.activity.findViewById(R.id.iv_bomb);
         
         // command dibawah ini buat set supaya si objek ga spawn dulu di awal activity launch
-        this.ivBomb.setX(-80);
-        this.ivBomb.setY(-80);
+        this.ivBomb.setX(x);
+        this.ivBomb.setY(y);
     }
 
     protected void setX(int x){
-        this.x = x;
+        this.ivBomb.setX(x);
     }
 
     protected int getX(){
-        return this.x;
+        return (int) this.ivBomb.getX();
     }
 
     protected void setY(int y){
-        this.y = y;
+        this.ivBomb.setY(y);
     }
 
     protected int getY(){
-        return this.y;
+        return (int) this.ivBomb.getY();
+    }
+
+    protected int getHeight(){
+        return ivBomb.getHeight();
+    }
+
+    protected int getWidth(){
+        return ivBomb.getWidth();
     }
 
     protected void spawn(){

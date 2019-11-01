@@ -1,10 +1,10 @@
 package com.example.tugasbesar_02;
 
-
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +47,10 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.getId() == this.btnPlayAgain.getId()){
-            getFragmentManager().beginTransaction().remove(GameOverFragment.this).commit();
+            // dibawah ini buat bikin supaya balik lagi ke kelas MainActivity
+            Context context = getActivity();
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
