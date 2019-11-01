@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/mainLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,13 +27,13 @@
                 android:id="@+id/tv_playerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Player : Unknown"/>
+                android:text="@string/main_tv_playerName"/>
 
             <TextView
                 android:id="@+id/tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Score : 0"/>
+                android:text="@string/main_tvScore"/>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_play_24"
-            android:text="Pause"/>
+            android:text="@string/main_fab_Pause"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_menu"
@@ -52,19 +51,18 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_menu_24"
             android:layout_marginLeft="10dp"/>
-
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frame_canvas"
         android:layout_width="match_parent"
-        android:layout_height="665dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tv_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please Tap to Start!"
+            android:text="@string/main_tv_Welcome"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="120dp"
             android:textSize="28sp"/>
@@ -78,8 +76,8 @@
 
         <ImageView
             android:id="@+id/iv_plane_enemy"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/plane1"/>
 
         <ImageView

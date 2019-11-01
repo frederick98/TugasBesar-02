@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -16,13 +17,12 @@
             android:id="@+id/et_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Please enter username"
+            android:hint="@string/fm_et_userName"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:padding="10dp"
-            android:layout_marginBottom="15dp"
-            >
+            android:layout_marginBottom="15dp">
         </EditText>
 
         <Button
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="START"
+            android:text="@string/fm_btn_start"
             android:textColor="@android:color/white"
             android:layout_marginBottom="10dp">
         </Button>
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="EXIT"
+            android:text="@string/fm_btn_exit"
             android:textColor="@android:color/white"
             android:layout_marginBottom="10dp">
         </Button>

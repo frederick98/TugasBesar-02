@@ -2,15 +2,11 @@ package com.example.tugasbesar_02;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.FragmentTransaction;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,9 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,FragmentListener {
-    protected Bitmap mBitmap;
-    protected Canvas mCanvas;
-    protected Paint strokePaint;
     protected FloatingActionButton fabPause;
     protected FloatingActionButton fabMenu;
     protected TextView tvPlayerName;
@@ -75,15 +68,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.fabPause.setOnClickListener(this);
         this.fabMenu.setOnClickListener(this);
 
-        tvScore.setText("Score : " + this.score);
-
-        this.plane = new Plane(this);
+        //this.plane = new Plane(this);
         this.enemyPlane = new EnemyPlane(this);
         this.bomb = new Bomb(this);
         this.fuel = new Fuel(this);
         this.reward = new Reward(this);
 
         this.url = "http://p3b.labftis.net/api.php";
+
+        tvScore.setText("Score : " + this.score);
     }
 
     public void changePosition() {
@@ -92,9 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // spawn object
         this.enemyPlane.spawn();
-        this.bomb.spawn();
-        this.fuel.spawn();
-        this.reward.spawn();
+        //this.bomb.spawn();
+        //this.fuel.spawn();
+        //this.reward.spawn();
 
         // move plane, dibuat kalo touch nanti naek, kalo release nanti turun
         if(action_flg == true){
@@ -106,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             planeY += 20;
         }
 
+        canvasLimit();
+
+        tvScore.setText("Score : " + this.score);
+    }
+
+    // method ini untuk membuat si object plane dibatasi movementnya sama canvasnya
+    private void canvasLimit(){
         // check plane position
         if(planeY < 0){
             planeY = 0;
@@ -122,23 +122,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     kalo kena reward +=50
     kalo kena fuel +=20
      */
-
     public void hitStatus(){
-        int plane2DiaX = this.enemyPlane.getX() + (this.enemyPlane.getWidth() / 2);
-        int plane2DiaY = this.enemyPlane.getY() + (this.enemyPlane.getHeight() / 2);
-
         // ngitungnya kalo kena center si ivplane(plane1) berarti kena, jadi objek yg dikenain ilang
-       boolean nempel=ivPlane.getX()==this.enemyPlane.getX();
-       boolean nempel2 =ivPlane.getY()==this.enemyPlane.getY();
-        //boolean nempel = 0<=plane2DiaX;
-        //boolean sejajarDalamP1 = ((plane2DiaY <= planeSize)); //|| (bombDiaY<=planeSize));
-        //boolean samaTinggiDalamP1 = ((planeY<=plane2DiaY)); //||(planeY<=bombY));
-        //boolean didalamP1 = plane2DiaY<=planeY+planeSize;
+        int plane2DiaX = enemyPlane.getX() + enemyPlane.getWidth() / 2;
+        int plane2DiaY = enemyPlane.getY() + enemyPlane.getHeight() / 2;
 
-        if(nempel && nempel2){
+        Log.d("zz", plane2DiaX+"");
+        Log.d("zz", plane2DiaY+"");
+
+        boolean kena = 0<=plane2DiaX;
+        boolean kena2 = plane2DiaX<=planeHeight;
+        boolean kena3 = planeY<=plane2DiaY;
+        boolean kena4 = plane2DiaY<=planeY+planeHeight;
+
+        if(kena && kena2 && kena3 && kena4){
+            Log.d("zz", "kena " + kena);
+             Log.d("zz", "kena2 " + kena2);
+            Log.d("zz", "kena3 " + kena3);
+            Log.d("zz", "kena4 " + kena4);
             this.score -= 10;
+            enemyPlane.setX(enemyPlane.x -= 10);
+
             this.tvScore.setText("Score: " + this.score);
-            this.enemyPlane.setX(this.enemyPlane.x -= 10);
 
             // stop playing
             this.timer.cancel();
@@ -195,49 +200,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return true;
     }
-
-
-    /*
-    public void initiateCanvas() {
-        // 1. Create Bitmap
-        this.mBitmap = Bitmap.createBitmap(this.ivCanvas.getWidth(), this.ivCanvas.getHeight(), Bitmap.Config.ARGB_8888);
-
-        // 2. Associate the bitmap to the ImageView.
-        this.ivCanvas.setImageBitmap(mBitmap);
-
-        // 3. Create a Canvas with the bitmap.
-        this.mCanvas = new Canvas(mBitmap);
-        this.resetCanvas();
-
-        // new paint for stroke + style (Paint.Style.STROKE)
-        this.strokePaint = new Paint();
-        this.strokePaint.setColor(Color.BLUE);
-
-        //create pesawat
-        /*
-        Pesawat p = new Pesawat(100, 100, 100);
-        p.drawTriangle(this.mCanvas, this.strokePaint);
-        p.setOnTouchListener(onTouchListener());
-        p.getOnTouchListener();
-
-
-
-        //resetCanvas
-        this.ivCanvas.invalidate();
-
-
-
-    public void resetCanvas() {
-        // 4. Draw canvas background
-        // Fill the entire canvas with solid color.
-        int mColorBackground = ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null);
-        mCanvas.drawColor(mColorBackground);
-
-        // 5. force draw
-        this.ivCanvas.invalidate();
-    }
-
-     */
 
     @Override
     public void onClick(View view) {

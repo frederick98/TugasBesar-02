@@ -3,4 +3,21 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_tv_playerName">Player : Unknown</string>
+    <string name="main_tvScore">Score : 0</string>
+    <string name="main_fab_Pause">Pause</string>
+    <string name="main_tv_Welcome">Please Tap to Start!</string>
+
+    <string name="fg_tv_gameOver">GAME OVER</string>
+    <string name="fg_tv_overHighScore">High Score : 0</string>
+    <string name="fg_tv_playerName">player name</string>
+    <string name="fg_tv_overScore">player score : 0</string>
+    <string name="fg_btn_play">PLAY AGAIN</string>
+
+    <string name="fm_et_userName">Please enter username</string>
+    <string name="fm_btn_start">START</string>
+    <string name="fm_btn_exit">EXIT</string>
+    
+    <string name="fp_btn_pause">UNPAUSE</string>
+    <string name="fp_tv_pause">PAUSED</string>
 </resources>

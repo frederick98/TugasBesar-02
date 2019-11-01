@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -17,12 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:text="PAUSED"
+            android:text="@string/fp_tv_pause"
             android:textStyle="bold"
             android:textAlignment="center"
             android:padding="10dp">
         </TextView>
-
 
         <Button
             android:id="@+id/btn_unpaused"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            android:text="UNPAUSE"
+            android:text="@string/fp_btn_pause"
             android:layout_marginBottom="10dp">
         </Button>
     </LinearLayout>
