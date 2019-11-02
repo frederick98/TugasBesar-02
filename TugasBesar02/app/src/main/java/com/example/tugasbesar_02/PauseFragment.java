@@ -33,6 +33,7 @@ public class PauseFragment extends DialogFragment implements View.OnClickListene
     public void onClick(View view) {
         if(view.getId() == this.btnUnpause.getId()){
             getFragmentManager().beginTransaction().remove(PauseFragment.this).commit();
+
         }
     }
 }

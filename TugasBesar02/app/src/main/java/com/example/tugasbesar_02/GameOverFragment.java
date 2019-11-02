@@ -12,11 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class GameOverFragment extends DialogFragment implements View.OnClickListener {
+public class GameOverFragment extends DialogFragment implements View.OnClickListener,FragmentListener {
     protected TextView tvHighScore;
     protected TextView tvPlayerName;
     protected TextView tvPlayerScore;
     protected Button btnPlayAgain;
+    protected MainActivity activity;
 
     public GameOverFragment() {
     }
@@ -51,6 +52,29 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
             Context context = getActivity();
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public void closeApp() {
+
+    }
+
+    @Override
+    public void updateScore(String score) {
+        tvHighScore.setText(score);
+
+        String banding=tvHighScore.getText().toString();
+
+        if(Integer.parseInt(banding)>Integer.parseInt(score))
+        {
+            tvHighScore.setText(banding);
+            banding=banding;
+        }
+        else
+        {
+            tvHighScore.setText(score);
+            banding=score;
         }
     }
 }

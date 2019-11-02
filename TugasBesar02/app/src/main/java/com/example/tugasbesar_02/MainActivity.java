@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected MyAsyncTask requester;
     protected String url;
 
+    protected boolean statusButtonPause=false;
+
 
     // buat ngatur supaya object ga kluar dari canvas
     private int planeHeight;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // setOnClickListener
         this.fabPause.setOnClickListener(this);
         this.fabMenu.setOnClickListener(this);
+
+
 
         //this.plane = new Plane(this);
         this.enemyPlane = new EnemyPlane(this);
@@ -237,26 +241,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+
+
     @Override
     public void onClick(View view) {
-       if(view.getId() == this.fabPause.getId()){
-           //jika ic_pause >> pause game
-           androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-           PauseFragment pauseDialogFragment = new PauseFragment();
-           pauseDialogFragment.show(ft,"");
-       }
+       if(view.getId() == this.fabPause.getId()) {
+           if(statusButtonPause==false) {
+
+               statusButtonPause=true;
+               //jika ic_pause >> pause game
+               timer.cancel();
+               timer = null;
+           }
+           else
+           {
+               statusButtonPause=false;
+               timer = new Timer();
+               timer.schedule(new TimerTask() {
+                   @Override
+                   public void run() {
+                       handler.post(new Runnable() {
+                           @Override
+                           public void run() {
+                               changePosition();
+                           }
+                       });
+                   }
+               }, 0, 20);  // manggil method changePosition setiap 20ms
+           }
+
+           }
+           //androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+           //PauseFragment pauseDialogFragment = new PauseFragment();
+           //pauseDialogFragment.show(ft, "");
+
+
+
+
        else if(view.getId() == this.fabMenu.getId()){
-           //jika ic_menu >> tampilkan menu
-           androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-           MenuFragment menuDialogFragment = new MenuFragment();
-           menuDialogFragment.show(ft,"");
+            //jika ic_menu >> tampilkan menu
+            androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            MenuFragment menuDialogFragment = new MenuFragment();
+            menuDialogFragment.show(ft,"");
+        }
        }
-    }
+
+
 
     @Override
     public void closeApp() {
         this.moveTaskToBack(true);
         this.finish();
+    }
+
+    @Override
+    public void updateScore(String score) {
+       score= this.tvScore.getText().toString();
     }
 
     // ketika gameover, panggil method ini untuk post scorenya ke wbs
