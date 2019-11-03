@@ -12,11 +12,11 @@
     <string name="fg_tv_overHighScore">High Score : 0</string>
     <string name="fg_tv_playerName">player name</string>
     <string name="fg_tv_overScore">player score : 0</string>
-    <string name="fg_btn_play">PLAY AGAIN</string>
+    <string name="fg_btn_play">Play Again</string>
 
     <string name="fm_et_userName">Please enter username</string>
-    <string name="fm_btn_start">START</string>
-    <string name="fm_btn_exit">EXIT</string>
+    <string name="fm_btn_start">Start Game</string>
+    <string name="fm_btn_exit">Exit Game</string>
     
     <string name="fp_btn_pause">UNPAUSE</string>
     <string name="fp_tv_pause">PAUSED</string>

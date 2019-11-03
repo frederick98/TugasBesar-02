@@ -3,7 +3,6 @@ package com.example.tugasbesar_02;
 
 import androidx.fragment.app.DialogFragment;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ public class MenuFragment extends DialogFragment implements View.OnClickListener
     protected Button btnStart;
     protected Button btnExit;
     protected FragmentListener listener;
-    protected MainActivity mainActivity;
 
     public MenuFragment() {
     }
@@ -52,5 +50,4 @@ public class MenuFragment extends DialogFragment implements View.OnClickListener
             this.listener.closeApp(); //keluar app
         }
     }
-
 }

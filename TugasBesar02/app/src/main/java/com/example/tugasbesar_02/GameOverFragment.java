@@ -17,7 +17,6 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
     protected TextView tvPlayerName;
     protected TextView tvPlayerScore;
     protected Button btnPlayAgain;
-    protected MainActivity activity;
 
     public GameOverFragment() {
     }
@@ -40,7 +39,7 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
         this.btnPlayAgain.setOnClickListener(this);
 
         this.tvPlayerName.setText(getTag());
-//        this.tvPlayerScore.setText("Score : "+this.activity.tvScore.getText().toString());
+        //this.tvPlayerScore.setText("Score : "+this.activity.tvScore.getText().toString());
 
         return view;
     }
@@ -64,15 +63,13 @@ public class GameOverFragment extends DialogFragment implements View.OnClickList
     public void updateScore(String score) {
         tvHighScore.setText(score);
 
-        String banding=tvHighScore.getText().toString();
+        String banding = tvHighScore.getText().toString();
 
-        if(Integer.parseInt(banding)>Integer.parseInt(score))
-        {
+        if(Integer.parseInt(banding)>Integer.parseInt(score)){
             tvHighScore.setText(banding);
-            banding=banding;
+            banding = banding;
         }
-        else
-        {
+        else{
             tvHighScore.setText(score);
             banding=score;
         }

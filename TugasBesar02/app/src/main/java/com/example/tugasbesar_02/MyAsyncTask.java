@@ -31,7 +31,6 @@ public class MyAsyncTask extends AsyncTask<String,String,String> {
         URL url;
         StringBuilder score= new StringBuilder("Score = ");
         try {
-
             url = new URL(stringUrl+result);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
@@ -52,7 +51,6 @@ public class MyAsyncTask extends AsyncTask<String,String,String> {
         } catch (IOException e) {
             score.append(e);
         }
-
         return score.toString();
     }
 

@@ -28,16 +28,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // class initialization
     protected Handler handler = new Handler();
     protected Timer timer = new Timer();
-    protected Plane plane;
     protected EnemyPlane enemyPlane;
     protected Bomb bomb;
     protected Fuel fuel;
     protected Reward reward;
     protected MyAsyncTask requester;
     protected String url;
-
-    protected boolean statusButtonPause=false;
-
 
     // buat ngatur supaya object ga kluar dari canvas
     private int planeHeight;
@@ -49,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // buat cek status 
     protected boolean action_flg = false;
     protected boolean activityStart = false;
+    protected boolean statusButtonPause = false;
 
     // scoring
     protected int score = 0;
@@ -69,9 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.fabPause.setOnClickListener(this);
         this.fabMenu.setOnClickListener(this);
 
-
-
-        //this.plane = new Plane(this);
         this.enemyPlane = new EnemyPlane(this);
         this.bomb = new Bomb(this);
         this.fuel = new Fuel(this);
@@ -101,9 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // release screen
             planeY += 20;
         }
-
         canvasLimit();
-
         tvScore.setText("Score : " + this.score);
     }
 
@@ -198,12 +190,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.score += 20;
             fuel.setX(fuel.x -= 10);
         }
-
         this.tvScore.setText("Score : "+this.score);
     }
 
     public boolean onTouchEvent(MotionEvent motionEvent){
-
         if(activityStart == false){
             activityStart = true;
             this.tvWelcome.setVisibility(View.GONE);
@@ -246,16 +236,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
        if(view.getId() == this.fabPause.getId()) {
-           if(statusButtonPause==false) {
-
-               statusButtonPause=true;
+           if(statusButtonPause == false) {
+               fabPause.setImageResource(R.drawable.ic_play_24);
+               statusButtonPause = true;
                //jika ic_pause >> pause game
                timer.cancel();
                timer = null;
            }
-           else
-           {
-               statusButtonPause=false;
+           else{
+               fabPause.setImageResource(R.drawable.ic_pause_24);
+               statusButtonPause = false;
                timer = new Timer();
                timer.schedule(new TimerTask() {
                    @Override
@@ -269,24 +259,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                    }
                }, 0, 20);  // manggil method changePosition setiap 20ms
            }
-
-           }
-           //androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-           //PauseFragment pauseDialogFragment = new PauseFragment();
-           //pauseDialogFragment.show(ft, "");
-
-
-
-
+       }
        else if(view.getId() == this.fabMenu.getId()){
             //jika ic_menu >> tampilkan menu
             androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             MenuFragment menuDialogFragment = new MenuFragment();
             menuDialogFragment.show(ft,"");
-        }
        }
-
-
+    }
 
     @Override
     public void closeApp() {
